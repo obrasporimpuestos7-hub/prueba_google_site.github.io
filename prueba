@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <title>Filtro por regiones</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      box-sizing: border-box;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 10px;
+    }
+
+    .subtitulo {
+      text-align: center;
+      margin-bottom: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+
+    /* Contenedor de botones */
+    .filter-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .filter-btn {
+      border: none;
+      padding: 10px 18px;
+      cursor: pointer;
+      font-size: 14px;
+      border-radius: 4px;
+      background-color: #d32f2f; /* rojo MVCS */
+      color: #fff;
+      transition: transform 0.1s ease, opacity 0.1s ease, background-color 0.2s ease;
+    }
+
+    .filter-btn:hover {
+      transform: translateY(-1px);
+      opacity: 0.9;
+    }
+
+    .filter-btn.active {
+      background-color: #9a0007;
+    }
+
+    /* Contenedor de tarjetas */
+    .cards-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 15px;
+    }
+
+    .card {
+      border-radius: 6px;
+      border: 1px solid #e0e0e0;
+      padding: 15px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      background-color: #fff;
+      transition: box-shadow 0.15s ease, transform 0.15s ease;
+    }
+
+    .card:hover {
+      box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+      transform: translateY(-2px);
+    }
+
+    .card-title {
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+
+    .card-region {
+      font-size: 12px;
+      color: #757575;
+      margin-bottom: 8px;
+    }
+
+    .card-detail {
+      font-size: 13px;
+      margin-bottom: 3px;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Proyectos por Región</h1>
+  <p class="subtitulo">
+    Usa los botones para filtrar por macroregión: Costa, Sierra o Selva.
+  </p>
+
+  <!-- BOTONES DE FILTRO -->
+  <div class="filter-container">
+    <button class="filter-btn active" onclick="filterRegion('todos', this)">Todos</button>
+    <button class="filter-btn" onclick="filterRegion('costa', this)">Costa</button>
+    <button class="filter-btn" onclick="filterRegion('sierra', this)">Sierra</button>
+    <button class="filter-btn" onclick="filterRegion('selva', this)">Selva</button>
+  </div>
+
+  <!-- TARJETAS (PROYECTOS / REGIONES) -->
+  <div class="cards-container" id="cardsContainer">
+
+    <!-- Ejemplos de COSTA -->
+    <div class="card" data-region="costa">
+      <div class="card-title">Lima</div>
+      <div class="card-region">Macroregión: Costa</div>
+      <div class="card-detail">N° proyectos: 10</div>
+      <div class="card-detail">Inversión aproximada: S/ 500 millones</div>
+    </div>
+
+    <div class="card" data-region="costa">
+      <div class="card-title">Ancash</div>
+      <div class="card-region">Macroregión: Costa</div>
+      <div class="card-detail">N° proyectos: 5</div>
+      <div class="card-detail">Inversión aproximada: S/ 200 millones</div>
+    </div>
+
+    <!-- Ejemplos de SIERRA -->
+    <div class="card" data-region="sierra">
+      <div class="card-title">Cusco</div>
+      <div class="card-region">Macroregión: Sierra</div>
+      <div class="card-detail">N° proyectos: 8</div>
+      <div class="card-detail">Inversión aproximada: S/ 300 millones</div>
+    </div>
+
+    <div class="card" data-region="sierra">
+      <div class="card-title">Puno</div>
+      <div class="card-region">Macroregión: Sierra</div>
+      <div class="card-detail">N° proyectos: 6</div>
+      <div class="card-detail">Inversión aproximada: S/ 150 millones</div>
+    </div>
+
+    <!-- Ejemplos de SELVA -->
+    <div class="card" data-region="selva">
+      <div class="card-title">Loreto</div>
+      <div class="card-region">Macroregión: Selva</div>
+      <div class="card-detail">N° proyectos: 4</div>
+      <div class="card-detail">Inversión aproximada: S/ 120 millones</div>
+    </div>
+
+    <div class="card" data-region="selva">
+      <div class="card-title">San Martín</div>
+      <div class="card-region">Macroregión: Selva</div>
+      <div class="card-detail">N° proyectos: 3</div>
+      <div class="card-detail">Inversión aproximada: S/ 80 millones</div>
+    </div>
+
+  </div>
+
+  <script>
+    function filterRegion(region, btn) {
+      const cards = document.querySelectorAll('.card');
+      const buttons = document.querySelectorAll('.filter-btn');
+
+      // Mostrar / ocultar tarjetas
+      cards.forEach(card => {
+        const cardRegion = card.getAttribute('data-region'); // costa / sierra / selva
+        if (region === 'todos' || cardRegion === region) {
+          card.style.display = 'block';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+
+      // Estado visual del botón activo
+      buttons.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+    }
+  </script>
+</body>
+</html>
